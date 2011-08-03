@@ -71,6 +71,11 @@ function runPushinator(log, config) {
 	var storage = require('./lib/storage.js');
 	storage.setLog(log);
 
+	var client = require('./lib/client.js');
+	client.setLog(log);
+	client.setStorage(storage);
+	client.listen(config.client);
+
 	var admin = require('./lib/admin.js');
 	admin.setLog(log);
 	admin.setStorage(storage);
