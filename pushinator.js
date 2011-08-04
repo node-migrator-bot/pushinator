@@ -6,55 +6,54 @@ var log = require('./lib/log.js')
   , admin = require('./lib/admin.js')
   , daemon = require('daemon')
   , path = require('path')
-  , fs = require('fs');
+  , fs = require('fs')
+  , init = require('init')
+;
 
 var config = {};
 
 // parse options
 var options = require("nomnom").opts({
+	command: {
+		position: 0,
+		help: 'Init command: start, stop, status, restart'
+	},
 	config: {
 		abbr: 'c',
 		metavar: 'FILE',
 		default: '/etc/pushinator.conf',
 		help: 'Config file to use'
-	},
-	daemon: {
-		abbr: 'd',
-		default: false,
-		help: 'Run in the background'
 	}
 }).parseArgs();
 
 // check config file
 if (!fileExist(options.config)) {
 	log.error('invalid config: '+options.config);
-	process.exit(0);
+	process.exit(1);
 }
 
-loadConfig();
+// load config file
+if ('/' == options.config[0]) {
+	config = require(options.config);
+}
+else {
+	config = require('./'+options.config);
+}
+
+log.setConfig(config.log);
 
 // daemonize
-if (options.daemon) {
-	daemon.daemonize(config.logfile, config.pidfile, function (err, pid) {
-		if (err) {
-			return log.error('Error starting daemon: ' + err);
+if (options.command) {
+	init.simple({
+		pidfile : config.pidfile,
+		command : options.command,
+		run     : function () {
+			runPushinator();
 		}
-		log.info('Daemon started successfully with pid: ' + pid);
-		runPushinator();
-	});
+	})
 }
 else {
 	runPushinator();
-}
-
-function loadConfig() {
-	// load config file
-	if ('/' == options.config[0]) {
-		config = require(options.config);
-	}
-	else {
-		config = require('./'+options.config);
-	}
 }
 
 function fileExist(fileName) {
@@ -73,13 +72,13 @@ function fileExist(fileName) {
 }
 
 function runPushinator() {
-	log.info("Running pushinator with config", config);
+	log.info("Starting pushinator");
 
 	storage.setLog(log);
 	client.setLog(log);
 	client.setStorage(storage);
-
 	client.listen(config.client);
+
 	admin.setLog(log);
 	admin.setStorage(storage);
 	admin.setClient(client);
