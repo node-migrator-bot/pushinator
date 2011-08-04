@@ -1,8 +1,14 @@
 #!/usr/bin/env node
 
-var log = require('./lib/log.js');
-var daemon = require('daemon');
-var path = require('path');
+var log = require('./lib/log.js')
+  , storage = require('./lib/storage.js')
+  , client = require('./lib/client.js')
+  , admin = require('./lib/admin.js')
+  , daemon = require('daemon')
+  , path = require('path')
+  , fs = require('fs');
+
+var config = {};
 
 // parse options
 var options = require("nomnom").opts({
@@ -25,13 +31,7 @@ if (!fileExist(options.config)) {
 	process.exit(0);
 }
 
-// load config file
-if ('/' == options.config[0]) {
-	var config = require(options.config);
-}
-else {
-	var config = require('./'+options.config);
-}
+loadConfig();
 
 // daemonize
 if (options.daemon) {
@@ -40,16 +40,24 @@ if (options.daemon) {
 			return log.error('Error starting daemon: ' + err);
 		}
 		log.info('Daemon started successfully with pid: ' + pid);
-		runPushinator(log, config);
+		runPushinator();
 	});
 }
 else {
-	runPushinator(log, config);
+	runPushinator();
+}
+
+function loadConfig() {
+	// load config file
+	if ('/' == options.config[0]) {
+		config = require(options.config);
+	}
+	else {
+		config = require('./'+options.config);
+	}
 }
 
 function fileExist(fileName) {
-	var fs = require('fs');
-
 	if ('string' != typeof fileName) {
 		return false;
 	}
@@ -64,20 +72,16 @@ function fileExist(fileName) {
 	return true;
 }
 
-function runPushinator(log, config) {
-	// TODO run Pushinator
-	log.info("running Pushinator with config", config);
+function runPushinator() {
+	log.info("Running pushinator with config", config);
 
-	var storage = require('./lib/storage.js');
 	storage.setLog(log);
-
-	var client = require('./lib/client.js');
 	client.setLog(log);
 	client.setStorage(storage);
-	client.listen(config.client);
 
-	var admin = require('./lib/admin.js');
+	client.listen(config.client);
 	admin.setLog(log);
 	admin.setStorage(storage);
+	admin.setClient(client);
 	admin.listen(config.admin);
 }
