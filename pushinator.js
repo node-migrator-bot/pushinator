@@ -27,20 +27,11 @@ var options = require("nomnom").opts({
 }).parseArgs();
 
 // check config file
-if (!fileExist(options.config)) {
+if ('string' != typeof options.config || !path.existsSync(options.config)) {
 	log.error('invalid config: '+options.config);
 	process.exit(1);
 }
-
-// load config file
-if ('/' == options.config[0]) {
-	config = require(options.config);
-}
-else {
-	config = require('./'+options.config);
-}
-
-log.setConfig(config.log);
+config = require(path.resolve(__dirname, options.config));
 
 // daemonize
 if (options.command) {
@@ -56,22 +47,8 @@ else {
 	runPushinator();
 }
 
-function fileExist(fileName) {
-	if ('string' != typeof fileName) {
-		return false;
-	}
-
-	try {
-		fs.statSync(fileName);
-	}
-	catch (e) {
-		return false;
-	}
-
-	return true;
-}
-
 function runPushinator() {
+	log.setConfig(config.log);
 	log.info("Starting pushinator");
 
 	storage.setLog(log);
