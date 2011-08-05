@@ -1,0 +1,30 @@
+{
+  "author": "Gevriye Duman <gabriel.duman@gmail.com>",
+  "contributors" : [
+    { "name": "Steffen Zieger",
+      "email": "me@saz.sh",
+      "url": "http://saz.sh"
+    }
+  ],
+  "name": "pushinator",
+  "description": "A simple server to push messages in realtime from your application to http clients, based on socket.io",
+  "version": "0.9.7",
+  "homepage": "https://github.com/KWICKCommunity/pushinator",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/KWICKCommunity/pushinator.git"
+  },
+  "bin": {
+    "pushinator": "./pushinator.js"
+  },
+  "engines": {
+    "node": "~v0.5.2"
+  },
+  "dependencies": { "init": "~0.1.1", "nomnom": "~0.6.1", "socket.io": "~0.7.7" },
+  "devDependencies": {},
+  "licenses": [
+    { "type": "GPLv2",
+      "url": "http://www.gnu.org/licenses/gpl-2.0.txt"
+    }
+  ]
+}
