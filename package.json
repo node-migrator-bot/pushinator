@@ -18,9 +18,9 @@
     "pushinator": "./pushinator.js"
   },
   "engines": {
-    "node": "~v0.5.2"
+    "node": "~v0.4.10"
   },
-  "dependencies": { "init": "~0.1.1", "nomnom": "~0.6.1", "socket.io": "~0.7.7" },
+  "dependencies": { "init": "~0.1.1", "nomnom": "~1.0.0", "socket.io": "~0.7.7" },
   "devDependencies": {},
   "licenses": [
     { "type": "GPLv2",

@@ -27,7 +27,7 @@ var options = require("nomnom").opts({
 }).parseArgs();
 
 // check config file
-if ('string' != typeof options.config || !path.existsSync(options.config)) {
+if (!path.existsSync(options.config)) {
 	log.error('invalid config: '+options.config);
 	process.exit(1);
 }
