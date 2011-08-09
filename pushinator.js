@@ -4,9 +4,7 @@ var log = require('./lib/log.js')
   , storage = require('./lib/storage.js')
   , client = require('./lib/client.js')
   , admin = require('./lib/admin.js')
-  , daemon = require('daemon')
   , path = require('path')
-  , fs = require('fs')
   , init = require('init')
 ;
 
