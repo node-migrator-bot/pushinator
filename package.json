@@ -8,7 +8,7 @@
   ],
   "name": "pushinator",
   "description": "A simple server to push messages in realtime from your application to http clients, based on socket.io",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "homepage": "https://github.com/KWICKCommunity/pushinator",
   "repository": {
     "type": "git",
