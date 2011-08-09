@@ -49,6 +49,7 @@ else {
 
 function runPushinator() {
 	log.setConfig(config.log);
+	log.logToConsole(options.command ? false : true);
 	log.info("Starting pushinator");
 
 	storage.setLog(log);
