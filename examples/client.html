@@ -1,0 +1,16 @@
+<script type="text/javascript" src="https://raw.github.com/LearnBoost/socket.io-client/0.7.5/dist/socket.io.js"></script>
+<script type="text/javascript">
+        var userId = 55866;
+        var hash = '7f81776793e31d71d1ed71038e78dbf5';
+
+        var socket = io.connect('http://127.0.0.1:9601');
+        socket.on('connect', function () {
+                // authenticate
+                socket.emit('auth', userId, hash);
+        });
+
+        socket.on('message', function (message) {
+                // handle received message
+                alert(message);
+        });
+</script>
