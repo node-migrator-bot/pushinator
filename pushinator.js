@@ -26,7 +26,7 @@ var options = require("nomnom").opts({
 
 // check config file
 if (!path.existsSync(options.config)) {
-	log.error('invalid config: '+options.config);
+	log.error('invalid config file ' + options.config);
 	process.exit(1);
 }
 config = require(path.resolve(__dirname, options.config));
@@ -48,7 +48,7 @@ else {
 function runPushinator() {
 	log.setConfig(config.log);
 	log.logToConsole(options.command ? false : true);
-	log.info("Starting pushinator");
+	log.info("Starting pushinator with config file " + options.config);
 
 	storage.setLog(log);
 	client.setLog(log);

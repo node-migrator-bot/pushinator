@@ -20,7 +20,7 @@
   "engines": {
     "node": "~v0.4.10"
   },
-  "dependencies": { "init": "~0.1.1", "nomnom": "~1.0.0", "socket.io": "~0.7.7" },
+  "dependencies": { "node-syslog": "~1.0.0", "init": "~0.1.1", "nomnom": "~1.0.0", "socket.io": "~0.7.7" },
   "devDependencies": {},
   "licenses": [
     { "type": "GPLv2",
