@@ -11,7 +11,7 @@ var log = require('./lib/log.js')
 var config = {};
 
 // parse options
-var options = require("nomnom").opts({
+var options = require("nomnom").options({
 	command: {
 		position: 0,
 		help: 'Init command: start, stop, status, restart'
