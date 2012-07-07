@@ -25,7 +25,7 @@ var options = require("nomnom").options({
 }).parseArgs();
 
 // check config file
-if (!path.existsSync(options.config)) {
+if (!fs.existsSync(options.config)) {
 	log.error('invalid config file ' + options.config);
 	process.exit(1);
 }
